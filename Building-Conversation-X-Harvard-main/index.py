@@ -41,7 +41,7 @@ def search():
         for usage in usageDict:
             if usage["code"] == building[0]["usage"]:
                 building[0]["usage"] = usage["description"]
-        session["buildingID"] = q
+        session["buildingID", ""] = q
     else:
         building = []
     return jsonify(building)
@@ -61,7 +61,7 @@ def postanswer():
         commentID = request.form.get('qid')
     commentType = request.form.get('type')
     #write into sql database
-    db.execute("INSERT INTO comments (building_id, type, comment, time, commentID) VALUES (?, ?, ?, CURRENT_TIMESTAMP , ?)", session["buildingID"], commentType, answer, commentID)
+    db.execute("INSERT INTO comments (building_id, type, comment, time, commentID) VALUES (?, ?, ?, CURRENT_TIMESTAMP , ?)", session["buildingID", ""], commentType, answer, commentID)
     return redirect("/")
 
 @app.route("/addimage", methods=['POST'] )
@@ -69,7 +69,7 @@ def addimage():
     if request.form.get('cover_url'):
         image = request.form.get('cover_url')
         #write into sql database
-        db.execute('UPDATE buildings SET image = (?) WHERE id = (?)', image, session["buildingID"])
+        db.execute('UPDATE buildings SET image = (?) WHERE id = (?)', image, session["buildingID", ""])
         return redirect("/")
     else:
         return redirect("/")
@@ -92,16 +92,16 @@ def edit():
     #load database info to page for editing
     if request.method == 'GET':
         building = db.execute("SELECT * FROM buildings WHERE id IN (?)", session["buildingID", ""])[0]
-        address = db.execute("SELECT * FROM addresses WHERE building_id IN (?)", session["buildingID"])[0]
-        info = db.execute("SELECT * FROM building_info WHERE building_id IN (?)", session["buildingID"])[0]
+        address = db.execute("SELECT * FROM addresses WHERE building_id IN (?)", session["buildingID", ""])[0]
+        info = db.execute("SELECT * FROM building_info WHERE building_id IN (?)", session["buildingID", ""])[0]
         constructions = db.execute("SELECT DISTINCT construction FROM building_info WHERE construction IS NOT NULL ORDER BY construction")
         fields = dict.keys(info)
         usageDict = db.execute("SELECT * FROM usage_code")
-        description = db.execute("SELECT description FROM descriptions WHERE building_id = ?", session["buildingID"])[0]
+        description = db.execute("SELECT description FROM descriptions WHERE building_id = ?", session["buildingID", ""])[0]
         return render_template("edit.html", building=building, address=address, info = info, fields = fields, usage = usageDict, constructions = constructions, description = description )
     #update edited info in database
     if request.method == 'POST':
-        buildingID = session["buildingID"]
+        buildingID = session["buildingID", ""]
         year = request.form.get('year')
         architect = request.form.get('architect')
         style = request.form.get('style')
