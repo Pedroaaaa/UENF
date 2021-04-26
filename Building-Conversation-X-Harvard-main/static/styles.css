@@ -1,0 +1,169 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+
+head {
+    font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, h4{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+}
+
+.hidden {
+    display: none;
+}
+
+#map {
+    z-index:-1;
+    position:absolute;
+    height:100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.button {
+    background-color: #A41034;
+    border: 0px;
+    border-radius: 0px;
+    font-size: 1rem;
+    font-weight: normal;
+    color: white;
+    padding: 2.5rem 4rem;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.button.small {
+    background-color: #A41034;
+    border: 0px;
+    border-radius: 0px;
+    font-size: 1rem;
+    font-weight: normal;
+    color: white;
+    padding: 1.5rem 3rem;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.button:hover{
+    text-decoration: none;
+    color: white;
+    background-color: #525252;
+}
+
+a, a:link, a:visited{
+    font-family: 'Poppins', sans-serif;
+    color: black;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #525252;
+}
+
+.logo {
+vertical-align:middle
+}
+
+.crimson{
+    background: #A41034
+}
+
+.icon{
+height:30px;
+}
+
+.box {
+   display: flex;
+   align-items: center;
+   justify-content: flex-start;
+}
+
+.gradient{
+  background-image: linear-gradient(to left, rgba(132,96,61,0), rgba(132,96,61,1));
+}
+
+#notclickable{
+    pointer-events: none;
+}
+
+/*https://codepen.io/bootpen/pen/jbbaRa*/
+.modal-red .modal-backdrop {
+   background-color: red;
+}
+.modal.right .modal-dialog {
+    position: fixed;
+    margin: auto;
+    width: 40%;
+    height: 100%;
+        -webkit-transform: translate3d(0%, 0, 0);
+        -ms-transform: translate3d(0%, 0, 0);
+        -o-transform: translate3d(0%, 0, 0);
+        transform: translate3d(0%, 0, 0);
+}
+
+.modal.right .modal-content {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.modal.right .modal-body {
+    padding: 15px;
+}
+
+/*Right*/
+.modal.right.fade .modal-dialog {
+    right: -40%;
+        -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+        -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+        -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+        transition: opacity 0.3s linear, right 0.3s ease-out;
+}
+.modal.right.fade.show .modal-dialog {
+    right: 0;
+}
+
+.modal-content {
+    border-radius: 0;
+    border: none;
+}
+
+.modal-header {
+    border-bottom-color: #EEEEEE;
+    background-color: #FAFAFA;
+}
+
+.imgblock {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+
+.btn.btn-primary {
+    border: 0px;
+    border-radius: 0px;
+    background: #A41034;
+}
+
+.btn.btn-primary:hover{
+    background: red;
+}
+
+.btn.btn-secondary {
+    border: 0px;
+    border-radius: 0px;
+}
+
+.row{
+    padding-bottom:10px;
+}
