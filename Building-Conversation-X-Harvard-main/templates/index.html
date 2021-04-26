@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% block title %}
+  <title>Building Conversation | Harvard</title>
+  <!-- Leaflet Library -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <!-- AJAX -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <div class="container-fluid" >
+  <div class="row gradient align-items-center justify-content-center" style=" width: 60%;">
+    <div class="col-2 gx-0">
+      <a href="/">
+        <img src="static/favicon.png" class="img-fluid" style="width: 100%; margin: 10px"/>
+      </a>
+    </div>
+    <div class="col align-middle">
+      <h1 style="color: black; font-size: 2.5rem; font-weight: 800;">Building Conversation<br>X Harvard<br></h1>
+    </div>
+  </div>
+  </div>
+{% endblock %}
+
+{% block main %}
+  <div id="map"></div>
+  <!-- load map javascript -->
+  <script src="static/map.js"></script>
+  <!-- Bootstrap modal -->
+  <div class="modal fade right" id="BuildingDetails" tabindex="-1" role="dialog" aria-labelledby="BuildingDetailsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-full-height modal-right" role="dialog">
+        <div class="modal-content align-items-center" >
+          <div class="modal-header" style="width: 100%">
+            <h1 id="ModalHeader" style="font-weight: 800; margin: 10px;">{{name}}</h1>
+            <a href="/edit">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Edit_icon_%28the_Noun_Project_30184%29.svg" class="icon"/>
+            </a>
+          </div>
+            <div class="modal-body" style="width: 100%">
+              <div class="row align-items-center">
+                <div class="col" id="buildingImage" style="padding: 20px;">
+                </div>
+              </div>
+              <div class="row" id = "building_info">
+              </div>
+              <div class="row" id = "description">
+              </div>
+              <div class="row" id = "comments">
+              </div>
+              <hr>
+              <!-- Form for posting questions or comments-->
+              <form action="/postcomment" method="POST">
+                <div class="form-group align-bottom">
+                  <select class="form-select" aria-label="type" name="type" >
+                    <option id="ask" value='ASK'>Question</option>
+                    <option id="comment" value='COM'>Comment</option>
+                  </select>
+                  <textarea class="form-control" name = 'comment' id="message-text" required></textarea>
+                  <button type="submit" class="btn btn-primary">Post</button>
+                </div>
+              </form>
+            </div>
+            <!-- close button for modal -->
+            <div class="modal-footer" style="width: 100%">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  //show answer form once the answer button is clicked on
+  function answer(val){
+    inputID = 'answer_form_' + val;
+    var input=document.getElementById(inputID);
+    //show answer text area
+    if (input.innerHTML==''){
+    input.innerHTML = '<label for="answer_text"><b>Answer</b></label><textarea class="form-control" name="answer" id="answer_text" rows="3" required></textarea>';
+    }
+    else
+    {
+      //if the text area is shown, then submit the answer when the button is clicked on
+      submitID = "submitAnswer_"+val;
+      document.getElementById(submitID).submit();
+    }
+  }
+</script>
+
+{% endblock %}
