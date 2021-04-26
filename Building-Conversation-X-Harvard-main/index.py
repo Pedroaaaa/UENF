@@ -91,7 +91,7 @@ def postcomment():
 def edit():
     #load database info to page for editing
     if request.method == 'GET':
-        building = db.execute("SELECT * FROM buildings WHERE id IN (?)", session["buildingID"])[0]
+        building = db.execute("SELECT * FROM buildings WHERE id IN (?)", session["buildingID", ""])[0]
         address = db.execute("SELECT * FROM addresses WHERE building_id IN (?)", session["buildingID"])[0]
         info = db.execute("SELECT * FROM building_info WHERE building_id IN (?)", session["buildingID"])[0]
         constructions = db.execute("SELECT DISTINCT construction FROM building_info WHERE construction IS NOT NULL ORDER BY construction")
