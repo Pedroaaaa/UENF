@@ -13,3 +13,8 @@
         }
     ]
 }
+{
+  "env": {
+    "API_KEY": "8qRXweTl0noZKkA913nf"
+  }
+}
