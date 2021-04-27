@@ -49,6 +49,7 @@ def search():
         session["buildingID"] = q
     else:
         building = []
+        session["buildingID"] = q
     return jsonify(building)
 
 @app.route("/comment")
