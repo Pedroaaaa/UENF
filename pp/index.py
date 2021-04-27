@@ -26,7 +26,7 @@ if not os.environ.get("API_KEY"):
 #load database
 db = SQL("sqlite:///UENF.db")
 
-session["buildingID"] = "buildingID"
+session["buildingID"] = buildingID
 
 #homepage
 @app.route("/")
