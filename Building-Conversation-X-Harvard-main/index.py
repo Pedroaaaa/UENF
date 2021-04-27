@@ -41,7 +41,7 @@ def search():
         for usage in usageDict:
             if usage["code"] == building[0]["usage"]:
                 building[0]["usage"] = usage["description"]
-        session["buildingID"] = q
+        session["buildingID", 0] = q
     else:
         building = []
     return jsonify(building)
