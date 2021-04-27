@@ -13,8 +13,7 @@ app = Flask(__name__)
 # Ensure templates are auto-reloaded
 app.config["SECRET_KEY"] = 123456789
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.config["SESSION_PERMANENT"] = True
-app.config["PERMANENT_SESSION_LIFETIME"] = 36000
+app.config["SESSION_PERMANENT"] = False
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///UENF2.db"
 app.config["SESSION_TYPE"] = "sqlalchemy"
 db2 = SQLAlchemy(app)
