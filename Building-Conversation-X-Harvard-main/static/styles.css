@@ -89,7 +89,7 @@ height:30px;
 }
 
 .gradient{
-  background-image: linear-gradient(to left, rgba(132,96,61,0), rgba(132,96,61,1));
+  background-image: linear-gradient(to left, rgba(132,96,61,0), rgba(32,96,61,1));
 }
 
 #notclickable{
