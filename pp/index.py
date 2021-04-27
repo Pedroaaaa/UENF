@@ -33,7 +33,7 @@ def index():
 
 @app.route("/search")
 def search():
-    q = request.sessions.args.get("q")
+    q = request.args.get("q")
     if q:
         building = db.execute("SELECT name, image FROM buildings WHERE id = ?", q)
         address = db.execute("SELECT address, city, state FROM addresses WHERE building_id = ?", q)
@@ -53,7 +53,7 @@ def search():
 
 @app.route("/comment")
 def comment():
-    q = request.sessions.args.get("q")
+    q = request.args.get("q")
     if q:
         comments = db.execute("SELECT building_id, type, comment, time, commentID FROM comments WHERE building_id = ? ORDER BY commentID ASC, type DESC", q)
     return jsonify(comments)
