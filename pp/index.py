@@ -26,6 +26,7 @@ if not os.environ.get("API_KEY"):
 #load database
 db = SQL("sqlite:///UENF.db")
 
+session["buildingID"] = 0
 @app.route("/")
 def index():
     return render_template("index.html")
