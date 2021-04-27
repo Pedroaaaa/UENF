@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-#app.config["SESSION_PERMANENT"] = False
+#app.config["SESSION_PERMANENT"] = True
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///UENF2.db"
 #app.config["SESSION_TYPE"] = "sqlalchemy"
 #db2 = SQLAlchemy(app)
@@ -26,13 +26,14 @@ if not os.environ.get("API_KEY"):
 #load database
 db = SQL("sqlite:///UENF.db")
 
+#homepage
 @app.route("/")
 def index():
     return render_template("index.html")
 
 @app.route("/search")
 def search():
-    q = request.args.get("q")
+    q = request.session.args.get("q")
     if q:
         building = db.execute("SELECT name, image FROM buildings WHERE id = ?", q)
         address = db.execute("SELECT address, city, state FROM addresses WHERE building_id = ?", q)
@@ -52,7 +53,7 @@ def search():
 
 @app.route("/comment")
 def comment():
-    q = request.args.get("q")
+    q = request.session.args.get("q")
     if q:
         comments = db.execute("SELECT building_id, type, comment, time, commentID FROM comments WHERE building_id = ? ORDER BY commentID ASC, type DESC", q)
     return jsonify(comments)
@@ -60,18 +61,18 @@ def comment():
 @app.route("/postanswer", methods=['POST'] )
 def postanswer():
     #check if answer is received by checking the id
-    if request.form.get('qid'):
-        answer = request.form.get('answer')
-        commentID = request.form.get('qid')
-    commentType = request.form.get('type')
+    if request.session.form.get('qid'):
+        answer = request.session.form.get('answer')
+        commentID = request.session.form.get('qid')
+    commentType = request.session.form.get('type')
     #write into sql database
     db.execute("INSERT INTO comments (building_id, type, comment, time, commentID) VALUES (?, ?, ?, CURRENT_TIMESTAMP , ?)", session["buildingID"], commentType, answer, commentID)
     return redirect("/")
 
 @app.route("/addimage", methods=['POST'] )
 def addimage():
-    if request.form.get('cover_url'):
-        image = request.form.get('cover_url')
+    if request.session.form.get('cover_url'):
+        image = request.session.form.get('cover_url')
         #write into sql database
         db.execute('UPDATE buildings SET image = (?) WHERE id = (?)', image, session["buildingID"])
         return redirect("/")
@@ -80,13 +81,13 @@ def addimage():
 
 @app.route("/postcomment", methods=['POST'] )
 def postcomment():
-    comment = request.form.get('comment')
+    comment = request.session.form.get('comment')
     #set commentID so that answer and question can be grouped togehter
     if db.execute('SELECT MAX(commentID) FROM comments')[0]["MAX(commentID)"]!= None:
         commentID = db.execute('SELECT MAX(commentID) FROM comments')[0]["MAX(commentID)"] + 1
     else:
         commentID = 0
-    commentType = request.form.get('type')
+    commentType = request.session.form.get('type')
     #write into sql database
     db.execute("INSERT INTO comments (building_id, type, comment, time, commentID) VALUES (?, ?, ?, CURRENT_TIMESTAMP , ?)", session["buildingID"], commentType, comment, commentID)
     return redirect("/")
@@ -94,7 +95,7 @@ def postcomment():
 @app.route("/edit", methods=['GET', 'POST'])
 def edit():
     #load database info to page for editing
-    if request.method == 'GET':
+    if request.session.method == 'GET':
         building = db.execute("SELECT * FROM buildings WHERE id IN (?)", session["buildingID"])[0]
         address = db.execute("SELECT * FROM addresses WHERE building_id IN (?)", session["buildingID"])[0]
         info = db.execute("SELECT * FROM building_info WHERE building_id IN (?)", session["buildingID"])[0]
@@ -104,18 +105,18 @@ def edit():
         description = db.execute("SELECT description FROM descriptions WHERE building_id = ?", session["buildingID"])[0]
         return render_template("edit.html", building=building, address=address, info = info, fields = fields, usage = usageDict, constructions = constructions, description = description )
     #update edited info in database
-    if request.method == 'POST':
+    if request.session.method == 'POST':
         buildingID = session["buildingID"]
-        year = request.form.get('year')
-        architect = request.form.get('architect')
-        style = request.form.get('style')
-        if request.form.get('construction') == 'other':
-            construction = request.form.get('construction_other')
+        year = request.session.form.get('year')
+        architect = request.session.form.get('architect')
+        style = request.session.form.get('style')
+        if request.session.form.get('construction') == 'other':
+            construction = request.session.form.get('construction_other')
         else:
-            construction = request.form.get('construction')
-        usage = request.form.get('usage')
-        description = request.form.get('cap')
-        image = request.form.get('image')
+            construction = request.session.form.get('construction')
+        usage = request.session.form.get('usage')
+        description = request.session.form.get('cap')
+        image = request.session.form.get('image')
         db.execute('UPDATE buildings SET image = (?) WHERE id = (?)', image, buildingID)
         db.execute('UPDATE building_info SET year = (?), architect = (?), style = (?), construction = (?), usage = (?) WHERE building_id = (?)', year, architect, style, construction, usage, buildingID)
         if db.execute('SELECT * FROM descriptions WHERE building_id = (?)', buildingID):
