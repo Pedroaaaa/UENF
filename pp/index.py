@@ -11,13 +11,14 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
-app.config["SECRET_KEY"] = 123456789
+#app.config["SECRET_KEY"] = 123456789
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config["SESSION_PERMANENT"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.UENF2"
-app.config["SESSION_TYPE"] = "sqlalchemy"
-db2 = SQLAlchemy(app)
-app.config["SESSION_SQLALCHEMY"] = db2
+#app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.UENF2"
+#app.config["SESSION_TYPE"] = "sqlalchemy"
+#db2 = SQLAlchemy(app)
+#app.config["SESSION_SQLALCHEMY"] = db2
+app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 #db2.create_all()
 
@@ -50,7 +51,7 @@ def search():
         session["buildingID"] = q
     else:
         building = []
-    return jsonify(building)
+    return jsonify(building), session["buildingID"]
 
 @app.route("/comment")
 def comment():
