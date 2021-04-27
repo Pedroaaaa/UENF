@@ -48,7 +48,7 @@ def search():
 
 @app.route("/comment")
 def comment():
-    q = request.args.get("q")
+    q = request.args.get("q", "")
     if q:
         comments = db.execute("SELECT building_id, type, comment, time, commentID FROM comments WHERE building_id = ? ORDER BY commentID ASC, type DESC", q)
     return jsonify(comments)
