@@ -26,6 +26,8 @@ if not os.environ.get("API_KEY"):
 #load database
 db = SQL("sqlite:///UENF.db")
 
+session["buildingID"] = "buildingID"
+
 #homepage
 @app.route("/")
 def index():
@@ -49,7 +51,6 @@ def search():
         session["buildingID"] = q
     else:
         building = []
-        session["buildingID"] = q
     return jsonify(building)
 
 @app.route("/comment")
