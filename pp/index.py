@@ -12,11 +12,11 @@ app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.config["SESSION_PERMANENT"] = True
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///UENF2.db"
-app.config["SESSION_TYPE"] = "sqlalchemy"
-db2 = SQLAlchemy(app)
-app.config["SESSION_SQLALCHEMY"] = db2
+#app.config["SESSION_PERMANENT"] = True
+#app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///UENF2.db"
+#app.config["SESSION_TYPE"] = "sqlalchemy"
+#db2 = SQLAlchemy(app)
+#app.config["SESSION_SQLALCHEMY"] = db2
 Session(app)
 #db2.create_all()
 
@@ -33,7 +33,7 @@ def index():
 
 @app.route("/search")
 def search():
-    q = request.args.get("q")
+    q = request.sessions.args.get("q")
     if q:
         building = db.execute("SELECT name, image FROM buildings WHERE id = ?", q)
         address = db.execute("SELECT address, city, state FROM addresses WHERE building_id = ?", q)
@@ -53,7 +53,7 @@ def search():
 
 @app.route("/comment")
 def comment():
-    q = request.args.get("q")
+    q = request.sessions.args.get("q")
     if q:
         comments = db.execute("SELECT building_id, type, comment, time, commentID FROM comments WHERE building_id = ? ORDER BY commentID ASC, type DESC", q)
     return jsonify(comments)
