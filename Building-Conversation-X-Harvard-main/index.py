@@ -28,7 +28,7 @@ def index():
 
 @app.route("/search")
 def search():
-    q = request.args.get("q")
+    q = request.args.get("q", "")
     if q:
         building = db.execute("SELECT name, image FROM buildings WHERE id = ?", q)
         address = db.execute("SELECT address, city, state FROM addresses WHERE building_id = ?", q)
@@ -41,7 +41,7 @@ def search():
         for usage in usageDict:
             if usage["code"] == building[0]["usage"]:
                 building[0]["usage"] = usage["description"]
-        session["buildingID", 0] = q
+        session["buildingID"] = q
     else:
         building = []
     return jsonify(building)
