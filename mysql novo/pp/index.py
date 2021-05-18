@@ -31,6 +31,7 @@ banco = mysql.connector.connect(
 banco.autocommit = True
 db = banco.cursor(dictionary=True)
 
+session["buildingID"] = request.args.get("q")
 
 #homepage
 @app.route("/")
