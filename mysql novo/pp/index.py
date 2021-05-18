@@ -42,6 +42,7 @@ def index():
 def search():
 
     q = request.args.get("q")
+    session["buildingID"] = request.args.get("q")
     if q:
         db.execute("SELECT name, image FROM buildings WHERE id = %s;"% q)
         building = db.fetchall()
