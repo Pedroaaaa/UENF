@@ -10,8 +10,6 @@ app = Flask(__name__)
 app.secret_key = "adfbnviaadfjbkn"
 
 
-Session(app)
-
 if not os.environ.get("API_KEY"):
     raise RuntimeError("API_KEY not set")
 
