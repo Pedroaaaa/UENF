@@ -61,10 +61,12 @@ def search():
 @app.route("/comment")
 def comment():
     banco2 = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    passwd = "pmm@2406",
-    database = "uenf",)
+    host = "bfmvrld2rnvkgpvamfxo-mysql.services.clever-cloud.com",
+    user = "u4khq0vqpwlgbpky",
+    passwd = "C3qxBYQLaIuGDJUJFNew",
+    database = "bfmvrld2rnvkgpvamfxo",
+    port = "3306"
+)
     banco2.autocommit = True
     db2 = banco2.cursor(dictionary=True)
     q = request.args.get("q")
