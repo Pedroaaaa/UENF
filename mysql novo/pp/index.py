@@ -15,10 +15,10 @@ if not os.environ.get("API_KEY"):
 
 #load database
 banco = mysql.connector.connect(
-    host = "db4free.net",
-    user = "olaalo",
-    passwd = "b2f69236",
-    database = "olaalo",
+    host = "bfmvrld2rnvkgpvamfxo-mysql.services.clever-cloud.com",
+    user = "u4khq0vqpwlgbpky",
+    passwd = "C3qxBYQLaIuGDJUJFNew",
+    database = "bfmvrld2rnvkgpvamfxo",
     port = "3306"
 )
 banco.autocommit = True
