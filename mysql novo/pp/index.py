@@ -10,8 +10,9 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
-app.config["SECRET_KEY"] = "123456789"
+app.config["SECRET_KEY"] = "adfbnviaadfjbkn"
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.secret_key = "adfbnviaadfjbkn"
 
 
 Session(app)
