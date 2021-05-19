@@ -3,15 +3,10 @@ import requests
 import json
 import mysql.connector
 from flask import Flask, jsonify, flash, redirect, render_template, request, session
-from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 # Configure application
 app = Flask(__name__)
-
-# Ensure templates are auto-reloaded
-app.config["SECRET_KEY"] = "adfbnviaadfjbkn"
-app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = "adfbnviaadfjbkn"
 
 
