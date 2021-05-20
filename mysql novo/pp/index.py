@@ -78,7 +78,7 @@ def comment():
 
 @app.route("/postanswer", methods=['POST'] )
 def postanswer():
-    #check if answer is received by checking the id
+    
     if request.form.get('qid'):
         answer = request.form.get('answer')
         commentID = request.form.get('qid')
